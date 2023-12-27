@@ -9,7 +9,7 @@ scalar_functions:
       * ISO_YEAR Return the ISO 8601 week-numbering year. First week of an ISO year has the majority (4 or more) of
         its days in January.
       * US_YEAR Return the US epidemiological year. First week of US epidemiological year has the majority (4 or more)
-        of its days in January. Last week of US epidemiological year has the year's last Wednesday in it. US 
+        of its days in January. Last week of US epidemiological year has the year's last Wednesday in it. US
         epidemiological week starts on Sunday.
       * QUARTER Return the number of the quarter within the year. January 1 through March 31 map to the first quarter,
         April 1 through June 30 map to the second quarter, etc.
@@ -57,7 +57,7 @@ scalar_functions:
       * MONDAY_WEEK, SUNDAY_WEEK, ISO_WEEK, and US_WEEK return values in range 0-52
 
       The indexing option must be specified when the component is QUARTER, MONTH, DAY, DAY_OF_YEAR,
-      MONDAY_DAY_OF_WEEK, SUNDAY_DAY_OF_WEEK, MONDAY_WEEK, SUNDAY_WEEK, ISO_WEEK, or US_WEEK. The 
+      MONDAY_DAY_OF_WEEK, SUNDAY_DAY_OF_WEEK, MONDAY_WEEK, SUNDAY_WEEK, ISO_WEEK, or US_WEEK. The
       indexing option cannot be specified when the component is YEAR, ISO_YEAR, US_YEAR, HOUR, MINUTE, SECOND,
       MILLISECOND, MICROSECOND, SUBSECOND, UNIX_TIME, or TIMEZONE_OFFSET.
 
@@ -688,3 +688,29 @@ scalar_functions:
           - name: origin
             value: time
         return: time
+  -
+    name: "current_date"
+    description: >-
+      Return the current date.
+
+      The `mode` option determines how often the date is evaluated. STREAMING mode
+      evaluates the current date for each row. BATCH mode evaluates the current date
+      once and uses the same result for every call to this function in the query.
+    impls:
+      - args:
+          - name: mode
+            options: [ STREAMING, BATCH ]
+        return: date
+  -
+    name: "current_timestamp"
+    description: >-
+      Return the current timestamp.
+
+      The `mode` option determines how often the timestamp is evaluated. STREAMING mode
+      evaluates the current timestamp for each row. BATCH mode evaluates the current
+      timestamp once and uses the same result for every call to this function in the query.
+    impls:
+      - args:
+          - name: mode
+            options: [ STREAMING, BATCH ]
+        return: timestamp
