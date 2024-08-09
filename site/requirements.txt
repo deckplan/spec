@@ -8,6 +8,7 @@ mkdocs-gen-files>=0.4.0,<1
 mkdocs-markdownextradata-plugin>=0.2.5,<1
 mkdocs-protobuf>=0.1.0,<1
 mkdocs-table-reader-plugin>=2,<3
+mkdocs-blogging-plugin>=2,<3
 pygments>=2.14,<3
 oyaml>=1.0,<2
 mdutils>=1.4.0,<2

@@ -1,4 +1,5 @@
 arrange:
   - producer_tools.md
+  - libraries.md
   - substrait_validator.md
   - third_party_tools.md

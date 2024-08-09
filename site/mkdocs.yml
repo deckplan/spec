@@ -39,6 +39,10 @@ plugins:
   - table-reader
   - markdownextradata
   - search
+  - blogging:
+      paging: off
+      dirs:
+        - blog
   - awesome-pages:
       filename: _config
   - minify:

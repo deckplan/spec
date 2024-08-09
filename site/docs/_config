@@ -1,14 +1,16 @@
-arrange:
+nav:
   - index.md
-  - spec
-  - types
-  - expressions
-  - relations
+  - Introduction: about.md
+  - News & Articles: blog
+  - tutorial
+  - Format:
+    - spec
+    - types
+    - expressions
+    - relations
   - serialization
   - extensions
   - community
   - governance.md
-  - about.md
   - tools
-  - tutorial
   - faq.md
