@@ -19,6 +19,9 @@ message PlanRel {
     // The root of a relation tree
     RelRoot root = 2;
   }
+
+  // provides a non-ordinal anchor for ReferenceRel
+  uint32 subtree_anchor = 3;
 }
 
 // Describe a set of operations to complete.
