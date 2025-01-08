@@ -1153,6 +1153,23 @@ scalar_functions:
             name: "input"
         return: i64
   -
+    name: char_length_32
+    description: >-
+      Return the number of characters in the input string.  The length includes trailing spaces.
+    impls:
+      - args:
+          - value: "string"
+            name: "input"
+        return: i32
+      - args:
+          - value: "varchar<L1>"
+            name: "input"
+        return: i32
+      - args:
+          - value: "fixedchar<L1>"
+            name: "input"
+        return: i32
+  -
     name: bit_length
     description: Return the number of bits in the input string.
     impls:
@@ -1169,6 +1186,22 @@ scalar_functions:
             name: "input"
         return: i64
   -
+    name: bit_length_32
+    description: Return the number of bits in the input string.
+    impls:
+      - args:
+          - value: "string"
+            name: "input"
+        return: i32
+      - args:
+          - value: "varchar<L1>"
+            name: "input"
+        return: i32
+      - args:
+          - value: "fixedchar<L1>"
+            name: "input"
+        return: i32
+  -
     name: octet_length
     description: Return the number of bytes in the input string.
     impls:
@@ -1184,6 +1217,22 @@ scalar_functions:
           - value: "fixedchar<L1>"
             name: "input"
         return: i64
+  -
+    name: octet_length_32
+    description: Return the number of bytes in the input string.
+    impls:
+      - args:
+          - value: "string"
+            name: "input"
+        return: i32
+      - args:
+          - value: "varchar<L1>"
+            name: "input"
+        return: i32
+      - args:
+          - value: "fixedchar<L1>"
+            name: "input"
+        return: i32
   -
     name: regexp_replace
     description: >-
