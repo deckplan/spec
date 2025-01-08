@@ -1,0 +1,12 @@
+%YAML 1.2
+---
+scalar_functions:
+  - name: "bitwise_not"
+    description: >
+      Return the bitwise NOT result for one decimal input in which Precision is 1.
+      Result precision will be equal to 2.
+    impls:
+      - args:
+          - name: x
+            value: "DECIMAL<1,0>"
+        return: "DECIMAL<2,0>"

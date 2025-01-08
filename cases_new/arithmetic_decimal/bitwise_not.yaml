@@ -1,0 +1,46 @@
+base_uri: >
+  https://github.com/substrait-io/substrait/blob/main/extensions/substrait/extensions/functions_arithmetic_decimal.yaml
+function: bitwise_not
+cases:
+- group: basic
+  description: Basic examples without any special cases
+  tests:
+  - (1|decimal<1, 0>): -2|decimal<1, 0>
+  - (1|decimal<2, 0>): -2|decimal<2, 0>
+  - (1|decimal<3, 0>): -2|decimal<3, 0>
+  - (1|decimal<4, 0>): -2|decimal<4, 0>
+  - (1|decimal<5, 0>): -2|decimal<5, 0>
+  - (1|decimal<6, 0>): -2|decimal<6, 0>
+  - (1|decimal<7, 0>): -2|decimal<7, 0>
+  - (1|decimal<8, 0>): -2|decimal<8, 0>
+  - (1|decimal<9, 0>): -2|decimal<9, 0>
+  - (1|decimal<10, 0>): -2|decimal<10, 0>
+  - (1|decimal<11, 0>): -2|decimal<11, 0>
+  - (1|decimal<12, 0>): -2|decimal<12, 0>
+  - (1|decimal<13, 0>): -2|decimal<13, 0>
+  - (1|decimal<14, 0>): -2|decimal<14, 0>
+  - (1|decimal<15, 0>): -2|decimal<15, 0>
+  - (1|decimal<16, 0>): -2|decimal<16, 0>
+  - (1|decimal<17, 0>): -2|decimal<17, 0>
+  - (1|decimal<18, 0>): -2|decimal<18, 0>
+  - (1|decimal<19, 0>): -2|decimal<19, 0>
+  - (1|decimal<20, 0>): -2|decimal<20, 0>
+  - (1|decimal<21, 0>): -2|decimal<21, 0>
+  - (1|decimal<22, 0>): -2|decimal<22, 0>
+  - (1|decimal<23, 0>): -2|decimal<23, 0>
+  - (1|decimal<24, 0>): -2|decimal<24, 0>
+  - (1|decimal<25, 0>): -2|decimal<25, 0>
+  - (1|decimal<26, 0>): -2|decimal<26, 0>
+  - (1|decimal<27, 0>): -2|decimal<27, 0>
+  - (1|decimal<28, 0>): -2|decimal<28, 0>
+  - (1|decimal<29, 0>): -2|decimal<29, 0>
+  - (1|decimal<30, 0>): -2|decimal<30, 0>
+  - (1|decimal<31, 0>): -2|decimal<31, 0>
+  - (1|decimal<32, 0>): -2|decimal<32, 0>
+  - (1|decimal<33, 0>): -2|decimal<33, 0>
+  - (1|decimal<34, 0>): -2|decimal<34, 0>
+  - (1|decimal<35, 0>): -2|decimal<35, 0>
+  - (1|decimal<36, 0>): -2|decimal<36, 0>
+  - (1|decimal<37, 0>): -2|decimal<37, 0>
+  - (1|decimal<38, 0>): -2|decimal<38, 0>
+  - (null|decimal<38, 0>): null|decimal<38, 0>

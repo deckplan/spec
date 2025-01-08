@@ -149,6 +149,16 @@ scalar_functions:
         return: |-
           max_precision = max(P1, P2)
           DECIMAL<max_precision, 0>
+  - name: "bitwise_not"
+    description: >
+      Return the bitwise NOT result for one decimal input.
+      In inputs scale must be 0 (i.e. only integer types are allowed).
+      Result precision will be equal to input precision.
+    impls:
+      - args:
+          - name: x
+            value: "DECIMAL<P,0>"
+        return: "DECIMAL<P,0>"
   - name: "sqrt"
     description: Square root of the value. Sqrt of 0 is 0 and sqrt of negative values will raise an error.
     impls:
