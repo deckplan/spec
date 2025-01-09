@@ -31,8 +31,8 @@ testCase
     ;
 
 testGroup
-    : testGroupDescription (testCase)+                          #scalarFuncTestGroup
-    | testGroupDescription (aggFuncTestCase)+                   #aggregateFuncTestGroup
+    : testGroupDescription? (testCase)+                          #scalarFuncTestGroup
+    | testGroupDescription? (aggFuncTestCase)+                   #aggregateFuncTestGroup
     ;
 
 arguments
