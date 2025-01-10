@@ -10,7 +10,32 @@ ltrim(''::str, ' '::str) = ''::str
 ltrim(' '::str, ' '::str) = ''::str
 ltrim(null::str, ' '::str) = null::str
 
+# spaces_only: Examples with only spaces to trim off
+ltrim('abc'::str) = 'abc'::str
+ltrim('   abc'::str) = 'abc'::str
+ltrim('abc   '::str) = 'abc   '::str
+ltrim('   abc   '::str) = 'abc   '::str
+ltrim(''::str) = ''::str
+ltrim(' '::str) = ''::str
+ltrim(null::str) = null::str
+
 # two_inputs: Examples with character input to trim off
 ltrim('aaaaabc'::str, 'a'::str) [spaces_only:FALSE] = 'bc'::str
 ltrim('abcabcdef'::str, 'abc'::str) [spaces_only:FALSE] = 'def'::str
 ltrim('abccbadef'::str, 'abc'::str) [spaces_only:FALSE] = 'def'::str
+
+# varchar
+ltrim('abc'::vchar<20>, ' '::vchar<5>) = 'abc'::vchar<20>
+ltrim('   abc'::vchar<20>, ' '::vchar<5>) = 'abc'::vchar<20>
+ltrim('abc   '::vchar<20>, ' '::vchar<5>) = 'abc   '::vchar<20>
+ltrim('   abc   '::vchar<20>, ' '::vchar<5>) = 'abc   '::vchar<20>
+ltrim('abc'::vchar<20>) = 'abc'::vchar<20>
+ltrim('   abc'::vchar<20>) = 'abc'::vchar<20>
+ltrim('abc   '::vchar<20>) = 'abc   '::vchar<20>
+ltrim('   abc   '::vchar<20>) = 'abc   '::vchar<20>
+ltrim('aaaaabc'::vchar<20>, 'a'::vchar<9>) [spaces_only:False] = 'bc'::vchar<20>
+ltrim('abcabcdef'::vchar<20>, 'abc'::vchar<9>) [spaces_only:False] = 'def'::vchar<20>
+ltrim('   \t\tHello World'::vchar<30>) = '\t\tHello World'::vchar<30>
+ltrim('   \n\nHello World'::vchar<30>) = '\n\nHello World'::vchar<30>
+ltrim('   \r\rHello World'::vchar<30>) = '\r\rHello World'::vchar<30>
+ltrim('   \u2003Hello World'::vchar<30>) = '\u2003Hello World'::vchar<30>

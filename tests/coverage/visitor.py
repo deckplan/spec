@@ -268,6 +268,8 @@ class TestCaseVisitor(FuncTestCaseParserVisitor):
             return self.visitBooleanArg(ctx.booleanArg())
         if ctx.stringArg() is not None:
             return self.visitStringArg(ctx.stringArg())
+        if ctx.varCharArg() is not None:
+            return self.visitVarCharArg(ctx.varCharArg())
         if ctx.decimalArg() is not None:
             return self.visitDecimalArg(ctx.decimalArg())
         if ctx.dateArg() is not None:
@@ -329,6 +331,12 @@ class TestCaseVisitor(FuncTestCaseParserVisitor):
 
     def visitStringArg(self, ctx: FuncTestCaseParser.StringArgContext):
         return CaseLiteral(value=ctx.StringLiteral().getText(), type="str")
+
+    def visitVarCharArg(self, ctx: FuncTestCaseParser.VarCharArgContext):
+        return CaseLiteral(
+            value=ctx.StringLiteral().getText(),
+            type=ctx.varCharType().getText().lower(),
+        )
 
     def visitDecimalArg(self, ctx: FuncTestCaseParser.DecimalArgContext):
         return CaseLiteral(
