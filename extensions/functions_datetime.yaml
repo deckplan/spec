@@ -1082,6 +1082,13 @@ aggregate_functions:
         return: timestamp?
       - args:
           - name: x
+            value: precision_timestamp<P>
+        nullability: DECLARED_OUTPUT
+        decomposable: MANY
+        intermediate: precision_timestamp?<P>
+        return: precision_timestamp?<P>
+      - args:
+          - name: x
             value: timestamp_tz
         nullability: DECLARED_OUTPUT
         decomposable: MANY
