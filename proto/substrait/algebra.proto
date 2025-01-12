@@ -1716,8 +1716,12 @@ message AggregateFunction {
   }
 }
 
-// This rel is used  to create references,
+// This rel is used to create references,
 // in case we refer to a RelRoot field names will be ignored
 message ReferenceRel {
+  // points to a PlanRel in Plan.relations (ordinal reference)
   int32 subtree_ordinal = 1;
+
+  // points to a subtree_anchor in PlanRel (for non-ordinal reference)
+  uint32 subtree_reference = 2;
 }
