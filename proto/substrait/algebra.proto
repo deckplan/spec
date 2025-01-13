@@ -583,6 +583,8 @@ message Rel {
     HashJoinRel hash_join = 13;
     MergeJoinRel merge_join = 14;
     NestedLoopJoinRel nested_loop_join = 18;
+    DuplicateEliminatedGetRel duplicate_eliminated_get = 23;
+    DuplicateEliminatedJoinRel duplicate_eliminated_join = 24;
     ConsistentPartitionWindowRel window = 17;
     ExchangeRel exchange = 15;
     ExpandRel expand = 16;
@@ -903,6 +905,52 @@ message NestedLoopJoinRel {
     JOIN_TYPE_LEFT_ANTI = 7;
     JOIN_TYPE_RIGHT_ANTI = 8;
     JOIN_TYPE_LEFT_SINGLE = 9;
+    JOIN_TYPE_RIGHT_SINGLE = 10;
+    JOIN_TYPE_LEFT_MARK = 11;
+    JOIN_TYPE_RIGHT_MARK = 12;
+  }
+
+  substrait.extensions.AdvancedExtension advanced_extension = 10;
+}
+
+message DuplicateEliminatedGetRel {
+  RelCommon common = 1;
+  ReferenceRel input = 2;
+}
+
+message DuplicateEliminatedJoinRel {
+  RelCommon common = 1;
+  Rel left = 2;
+  Rel right = 3;
+
+  Expression expression = 4;
+  Expression post_join_filter = 5;
+
+  JoinType type = 6;
+
+  // The set of columns that will be duplicate eliminated from the LHS and pushed into the RHS
+  repeated Expression.FieldReference duplicate_eliminated_columns = 7;
+
+  DuplicateEliminatedSide duplicate_eliminated_side = 8;
+
+  // If this is a DuplicateEliminatedJoin, whether it has been flipped to de-duplicating the LHS or RHS
+  enum DuplicateEliminatedSide {
+    DUPLICATE_ELIMINATED_SIDE_UNSPECIFIED = 0;
+    DUPLICATE_ELIMINATED_SIDE_LEFT = 1;
+    DUPLICATE_ELIMINATED_SIDE_RIGHT = 2;
+  }
+
+  enum JoinType {
+    JOIN_TYPE_UNSPECIFIED = 0;
+    JOIN_TYPE_INNER = 1;
+    JOIN_TYPE_OUTER = 2;
+    JOIN_TYPE_LEFT = 3;
+    JOIN_TYPE_RIGHT = 4;
+    JOIN_TYPE_LEFT_SEMI = 5;
+    JOIN_TYPE_LEFT_ANTI = 6;
+    JOIN_TYPE_LEFT_SINGLE = 7;
+    JOIN_TYPE_RIGHT_SEMI = 8;
+    JOIN_TYPE_RIGHT_ANTI = 9;
     JOIN_TYPE_RIGHT_SINGLE = 10;
     JOIN_TYPE_LEFT_MARK = 11;
     JOIN_TYPE_RIGHT_MARK = 12;

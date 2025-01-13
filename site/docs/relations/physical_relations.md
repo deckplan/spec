@@ -47,7 +47,47 @@ The nested loop join operator does a join by holding the entire right input and 
 | Join Expression | A boolean condition that describes whether each record from the left set "match" the record from the right set. | Optional. Defaults to true (a Cartesian join). |
 | Join Type       | One of the join types defined in the Join operator.          | Required                                       |
 
+## Duplicate Eliminated Join Operator
+The Duplicate Eliminated Join, along with the [Duplicate Eliminated Get Operator](physical_relations.md#duplicate-eliminated-get-operator) are the two necessary operators that enable general subquery unnesting. (See the [Unnesting Arbitrary Queries](https://cs.emis.de/LNI/Proceedings/Proceedings241/383.pdf) paper for more information.)
 
+The Duplicate Eliminated Join is essentially a [Regular Join Operator](logical_relations.md#join-operator). It can have any regular join type, and its execution is the same.  The only restriction is that the join must be a hash equi-join. The main difference is that one of its children has, somewhere in its subtree, a dependency on the deduplicated result of the other. Therefore, this operator pushes the deduplicated result to its dependent child via the Duplicate Eliminated Get Operator. The side that will be deduplicated is specified in the Duplicate Eliminated Side property. The other side is the one that depends on the deduplication.
+
+The Duplicate Eliminated Join has two outputs.  The first output is no different than a regular join output.  The second output is the output to the duplicate eliminated get operator.  This output contains only the columns listed in the `duplicate_eliminated_columns` property.  This output contains only the columns listed in the `duplicate_eliminated_columns` property, corresponding to the side depicted by the `duplicate_eliminated_side`. Note that either the build side or the probe side can be deduplicated and then pushed to the other.
+
+| Signature            | Value                                                                                                             |
+| -------------------- |-------------------------------------------------------------------------------------------------------------------|
+| Inputs               | 2                                                                                                                 |
+| Outputs              | 2 One output is from the deduplicated columns in the Duplicate Eliminated Get, and the second is the join output. |
+| Property Maintenance | It is the same as the [Hash Equijoin Operator](physical_relations.md#hash-equijoin-operator)                      |
+| Direct Output Order  | Same as the [Join](logical_relations.md#join-operator) operator.                                                  |
+
+### Duplicate Eliminated Join Properties
+
+| Property                  | Description                                                                                                                                                                                                             | Required                 |
+|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|
+| Left Input                | A relational input.                                                                                                                                                                                                     | Required                 |
+| Right Input               | A relational input.                                                                                                                                                                                                     | Required                 |
+| Left Keys                 | References to the fields to join on in the left input.                                                                                                                                                                  | Required                 |
+| Right Keys                | References to the fields to join on in the right input.                                                                                                                                                                 | Required                 |    
+| Post Join Predicate       | An additional expression that can be used to reduce the output of the join operation post the equality condition. Minimizes the overhead of secondary join conditions that cannot be evaluated using the equijoin keys. | Optional, defaults true. |
+| Join Type                 | One of the join types defined in the Join operator.                                                                                                                                                                     | Required                 |
+| Duplicate Eliminated Side | The side that is deduplicated and pushed into the other side.                                                                                                                                                           | Required                 |
+| Duplicate Eliminated Columns | The columns that should be included in the deduplicated output.  These columns must be key columns. | Required |
+
+## Duplicate Eliminated Get Operator
+An operator that takes as its input the result of the deduplicated side of the Duplicate Eliminated Join. It simply scans the input and outputs the deduplicated values.
+| Signature            | Value                                                                               |
+| -------------------- |-------------------------------------------------------------------------------------|
+| Inputs               | 1                                                                                   |
+| Outputs              | 1                                                                                   |
+| Property Maintenance | Distribution is not maintained due to the deduplication. Orderedness is eliminated. |
+| Direct Output Order  | It will only project the deduplicated columns from it's input                       |
+
+### Duplicate Eliminated Get Properties
+
+| Property   | Description                                        | Required                    |
+|------------|----------------------------------------------------|-----------------------------|
+| Input      | A relational input.                                | Required                    |
 
 ## Merge Equijoin Operator
 
