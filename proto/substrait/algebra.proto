@@ -649,6 +649,9 @@ message DdlRel {
     // An operation that removes an object from the system (without throwing an exception if the object did not exist)
     DDL_OP_DROP_IF_EXIST = 5;
   }
+
+  substrait.extensions.AdvancedExtension advanced_extension = 10;
+
   //TODO add PK/constraints/indexes/etc..?
 }
 
@@ -710,6 +713,8 @@ message WriteRel {
     // subplans in the body of the Rel input) and return those with anounter PlanRel.relations.
     OUTPUT_MODE_MODIFIED_RECORDS = 2;
   }
+
+  substrait.extensions.AdvancedExtension advanced_extension = 10;
 }
 
 // The operator that modifies the columns of a table
@@ -728,6 +733,8 @@ message UpdateRel {
     Expression transformation = 1; // the transformation to apply
     int32 column_target = 2; // index of the column to apply the transformation to
   }
+
+  substrait.extensions.AdvancedExtension advanced_extension = 10;
 }
 
 // A base table. The list of string is used to represent namespacing (e.g., mydb.mytable).
