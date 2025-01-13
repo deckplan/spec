@@ -40,8 +40,7 @@ def write_markdown(file_obj: dict, file_name: str) -> None:
             mdFile.new_paragraph("Implementations:")
             implementations_list = function_spec["impls"]
             option_names_list = []
-            document_option_names_list = []
-            options_list = []
+            document_options = []
 
             for count, impl in enumerate(implementations_list):
                 if "args" not in impl:
@@ -70,7 +69,6 @@ def write_markdown(file_obj: dict, file_name: str) -> None:
                         # enum with no defined name, will be named as the list of choices
                         if "name" in arg:
                             option_name = str(arg["name"])
-                            document_option_names_list.append(option_name)
                         else:
                             option_name = choices
 
@@ -78,7 +76,7 @@ def write_markdown(file_obj: dict, file_name: str) -> None:
                         arg_string.append(option_name)
                         arg_with_option_names.append(option_name)
                         option_names_list.append(option_name)
-                        options_list.append(choices)
+                        document_options.append((option_name, choices))
                     else:
                         raise Exception(
                             f"Unrecognized argument found in "
@@ -88,12 +86,11 @@ def write_markdown(file_obj: dict, file_name: str) -> None:
                 opts = impl["options"] if "options" in impl else {}
                 for opt_name, opt in opts.items():
                     choices = str(opt["values"])
-                    document_option_names_list.append(opt_name)
+                    document_options.append((opt_name, choices))
                     option_name = f"option:{opt_name}"
                     arg_string.append(option_name)
                     arg_with_option_names.append(option_name)
                     option_names_list.append(option_name)
-                    options_list.append(choices)
 
                 # If the implementation is variadic, the last argument will appear `min_args`,
                 # number of times in the implementation.
@@ -104,10 +101,6 @@ def write_markdown(file_obj: dict, file_name: str) -> None:
                         if len(only_arg_names) > 0:
                             only_arg_names.append(only_arg_names[-1])
 
-                document_option_names_list = list(
-                    dict.fromkeys(document_option_names_list)
-                )
-                options_list = list(dict.fromkeys(options_list))
                 arg_values = [f"{x}" for x in arg_string]
                 options_and_arg_names = [f"{x}" for x in arg_with_option_names]
                 # reset the options names list for the next function implementation.
@@ -151,14 +144,11 @@ def write_markdown(file_obj: dict, file_name: str) -> None:
             """
             Write markdown for options.
             """
-            if len(options_list) > 0 and len(document_option_names_list) > 0:
+            document_options = sorted(list(set(document_options)))
+            if len(document_options) > 0:
                 mdFile.new_paragraph("<details><summary>Options:</summary>")
                 mdFile.write("\n")
-                A = options_list
-                B = document_option_names_list
-                for options_list, option_name in (
-                    zip(A, cycle(B)) if len(A) > len(B) else zip(cycle(A), B)
-                ):
+                for option_name, options_list in document_options:
                     mdFile.new_line(f"<li>{option_name} {options_list} </li> ")
 
                 mdFile.new_paragraph("</details>")
